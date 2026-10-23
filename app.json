@@ -1,0 +1,73 @@
+{
+  "id": "no.kristo.squeezebox",
+  "version": "1.0.0",
+  "compatibility": ">=12.0.0",
+  "sdk": 3,
+  "platforms": ["local"],
+  "name": { "en": "Squeezebox (Lyrion)", "no": "Squeezebox (Lyrion)" },
+  "description": { "en": "Control Squeezebox players via Lyrion Music Server", "no": "Styr Squeezebox-spillere via Lyrion Music Server" },
+  "category": ["music"],
+  "permissions": [],
+  "brandColor": "#E8501E",
+  "author": { "name": "Sebastian Kristoffersen", "email": "sebastian@kristo.no" },
+  "images": { "small": "/assets/images/small.png", "large": "/assets/images/large.png", "xlarge": "/assets/images/xlarge.png" },
+  "icon": "/assets/icon.svg",
+  "flow": {
+    "actions": [
+      {
+        "id": "play_favorite",
+        "title": { "en": "Play favorite", "no": "Spill favoritt" },
+        "titleFormatted": { "en": "Play favorite [[favorite]]", "no": "Spill favoritt [[favorite]]" },
+        "args": [
+          { "type": "device", "name": "device", "filter": "driver_id=squeezebox" },
+          { "type": "autocomplete", "name": "favorite", "placeholder": { "en": "Favorite", "no": "Favoritt" } }
+        ]
+      },
+      {
+        "id": "play_url",
+        "title": { "en": "Play URL", "no": "Spill URL" },
+        "titleFormatted": { "en": "Play URL [[url]]", "no": "Spill URL [[url]]" },
+        "args": [
+          { "type": "device", "name": "device", "filter": "driver_id=squeezebox" },
+          { "type": "text", "name": "url", "placeholder": { "en": "http://stream.example/radio.mp3" } }
+        ]
+      },
+      {
+        "id": "sync_to",
+        "title": { "en": "Sync with player", "no": "Synkroniser med spiller" },
+        "titleFormatted": { "en": "Sync with [[target]]", "no": "Synkroniser med [[target]]" },
+        "args": [
+          { "type": "device", "name": "device", "filter": "driver_id=squeezebox" },
+          { "type": "autocomplete", "name": "target", "placeholder": { "en": "Player", "no": "Spiller" } }
+        ]
+      },
+      {
+        "id": "unsync",
+        "title": { "en": "Unsync player", "no": "Fjern synkronisering" },
+        "args": [ { "type": "device", "name": "device", "filter": "driver_id=squeezebox" } ]
+      }
+    ]
+  },
+  "drivers": [
+    {
+      "id": "squeezebox",
+      "name": { "en": "Squeezebox player", "no": "Squeezebox-spiller" },
+      "class": "speaker",
+      "capabilities": [
+        "onoff", "speaker_playing", "speaker_next", "speaker_prev",
+        "volume_set", "volume_mute", "speaker_artist", "speaker_album", "speaker_track"
+      ],
+      "platforms": ["local"],
+      "connectivity": ["lan"],
+      "images": {
+        "small": "/drivers/squeezebox/assets/images/small.png",
+        "large": "/drivers/squeezebox/assets/images/large.png",
+        "xlarge": "/drivers/squeezebox/assets/images/xlarge.png"
+      },
+      "pair": [
+        { "id": "list_devices", "template": "list_devices", "navigation": { "next": "add_devices" } },
+        { "id": "add_devices", "template": "add_devices" }
+      ]
+    }
+  ]
+}

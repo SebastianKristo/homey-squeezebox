@@ -1,0 +1,29 @@
+<!doctype html>
+<html>
+<head><script type="text/javascript" src="/homey.js" data-origin="settings"></script></head>
+<body>
+  <h1 class="homey-title">Lyrion Music Server</h1>
+  <fieldset class="homey-form-fieldset">
+    <div class="homey-form-group"><label class="homey-form-label" for="host">Host / IP</label>
+      <input class="homey-form-input" id="host" type="text" placeholder="192.168.1.10"></div>
+    <div class="homey-form-group"><label class="homey-form-label" for="port">Port</label>
+      <input class="homey-form-input" id="port" type="number" placeholder="9000"></div>
+    <div class="homey-form-group"><label class="homey-form-label" for="username">Username (optional)</label>
+      <input class="homey-form-input" id="username" type="text"></div>
+    <div class="homey-form-group"><label class="homey-form-label" for="password">Password (optional)</label>
+      <input class="homey-form-input" id="password" type="password"></div>
+  </fieldset>
+  <button id="save" class="homey-button-primary-full">Save</button>
+  <script>
+    const keys = ['host', 'port', 'username', 'password'];
+    function onHomeyReady(Homey) {
+      keys.forEach((k) => Homey.get(k, (err, v) => { if (v != null) document.getElementById(k).value = v; }));
+      document.getElementById('save').addEventListener('click', () => {
+        keys.forEach((k) => Homey.set(k, document.getElementById(k).value.trim()));
+        Homey.alert('Saved');
+      });
+      Homey.ready();
+    }
+  </script>
+</body>
+</html>
