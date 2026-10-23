@@ -1,7 +1,9 @@
 {
   "name": "no.kristo.squeezebox",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "main": "app.js",
   "license": "MIT",
-  "engines": { "node": ">=18" }
+  "engines": {
+    "node": ">=18"
+  }
 }
