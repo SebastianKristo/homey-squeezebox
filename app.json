@@ -11,24 +11,49 @@
     "no": "Squeezebox (Lyrion)"
   },
   "description": {
-    "en": "Control Squeezebox players via Lyrion Music Server",
-    "no": "Styr Squeezebox-spillere via Lyrion Music Server"
+    "en": "Bring your Squeezebox players back to life",
+    "no": "Gi Squeezebox-spillerne dine nytt liv"
   },
   "category": [
     "music"
   ],
-  "permissions": [],
-  "brandColor": "#24292E",
-  "author": {
-    "name": "Sebastian Kristoffersen",
-    "email": "sebastian@kristo.no"
+  "tags": {
+    "en": [
+      "squeezebox",
+      "lyrion",
+      "logitech media server",
+      "lms",
+      "squeezelite",
+      "music",
+      "radio"
+    ],
+    "no": [
+      "squeezebox",
+      "lyrion",
+      "logitech media server",
+      "lms",
+      "musikk",
+      "radio"
+    ]
   },
+  "permissions": [],
   "images": {
     "small": "/assets/images/small.png",
     "large": "/assets/images/large.png",
     "xlarge": "/assets/images/xlarge.png"
   },
   "icon": "/assets/icon.svg",
+  "author": {
+    "name": "Sebastian Kristo Jemtland",
+    "email": "sebastian@kristo.no"
+  },
+  "brandColor": "#24292E",
+  "source": "https://github.com/SebastianKristo/homey-squeezebox",
+  "homepage": "https://github.com/SebastianKristo/homey-squeezebox",
+  "support": "https://github.com/SebastianKristo/homey-squeezebox/issues",
+  "bugs": {
+    "url": "https://github.com/SebastianKristo/homey-squeezebox/issues"
+  },
   "flow": {
     "triggers": [
       {
@@ -358,9 +383,16 @@
       },
       "pair": [
         {
+          "id": "server",
+          "navigation": {
+            "next": "list_devices"
+          }
+        },
+        {
           "id": "list_devices",
           "template": "list_devices",
           "navigation": {
+            "prev": "server",
             "next": "add_devices"
           }
         },
@@ -418,9 +450,16 @@
       },
       "pair": [
         {
+          "id": "server",
+          "navigation": {
+            "next": "list_devices"
+          }
+        },
+        {
           "id": "list_devices",
           "template": "list_devices",
           "navigation": {
+            "prev": "server",
             "next": "add_devices"
           }
         },
@@ -478,9 +517,16 @@
       },
       "pair": [
         {
+          "id": "server",
+          "navigation": {
+            "next": "list_devices"
+          }
+        },
+        {
           "id": "list_devices",
           "template": "list_devices",
           "navigation": {
+            "prev": "server",
             "next": "add_devices"
           }
         },
@@ -538,9 +584,16 @@
       },
       "pair": [
         {
+          "id": "server",
+          "navigation": {
+            "next": "list_devices"
+          }
+        },
+        {
           "id": "list_devices",
           "template": "list_devices",
           "navigation": {
+            "prev": "server",
             "next": "add_devices"
           }
         },

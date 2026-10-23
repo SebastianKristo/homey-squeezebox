@@ -1,0 +1,55 @@
+<div class="homey-form">
+  <p data-i18n="pair.intro"></p>
+  <div id="found"></div>
+  <div class="homey-form-group">
+    <label class="homey-form-label" for="host" data-i18n="pair.host"></label>
+    <input class="homey-form-input" id="host" type="text" placeholder="192.168.1.10">
+  </div>
+  <div class="homey-form-group">
+    <label class="homey-form-label" for="port" data-i18n="pair.port"></label>
+    <input class="homey-form-input" id="port" type="number" placeholder="9000">
+  </div>
+  <div class="homey-form-group">
+    <label class="homey-form-label" for="username" data-i18n="pair.username"></label>
+    <input class="homey-form-input" id="username" type="text" autocomplete="off">
+  </div>
+  <div class="homey-form-group">
+    <label class="homey-form-label" for="password" data-i18n="pair.password"></label>
+    <input class="homey-form-input" id="password" type="password" autocomplete="off">
+  </div>
+  <button id="connect" class="homey-button-primary-full" data-i18n="pair.connect"></button>
+</div>
+<style>
+  #found button { margin: 0 8px 8px 0; }
+</style>
+<script>
+  const $ = (id) => document.getElementById(id);
+  const fields = ['host', 'port', 'username', 'password'];
+
+  Homey.emit('get_server').then((server) => {
+    fields.forEach((f) => { $(f).value = server[f] || ''; });
+    if (!server.host) {
+      return Homey.emit('discover').then((servers) => {
+        servers.forEach((s) => {
+          const b = document.createElement('button');
+          b.className = 'homey-button-secondary-small';
+          b.textContent = `${s.name} (${s.host})`;
+          b.onclick = () => { $('host').value = s.host; $('port').value = s.port; };
+          $('found').appendChild(b);
+        });
+        if (servers.length === 1) { $('host').value = servers[0].host; $('port').value = servers[0].port; }
+      });
+    }
+  });
+
+  $('connect').addEventListener('click', () => {
+    const server = {};
+    fields.forEach((f) => { server[f] = $(f).value.trim(); });
+    if (!server.host) return Homey.alert(Homey.__('pair.host_missing'));
+    $('connect').classList.add('is-loading');
+    Homey.emit('save_server', server)
+      .then(() => Homey.showView('list_devices'))
+      .catch((err) => Homey.alert(err.message || err))
+      .finally(() => $('connect').classList.remove('is-loading'));
+  });
+</script>

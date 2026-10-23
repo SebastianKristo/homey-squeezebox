@@ -1,1 +1,20 @@
-{ "error": { "no_server": "Configure the Lyrion server in the app settings first", "disconnected": "Player is not connected to Lyrion" } }
+{
+  "error": {
+    "no_server": "Configure the Lyrion server in the app settings first",
+    "disconnected": "Player is not connected to Lyrion"
+  },
+  "pair": {
+    "intro": "Enter the address of your Lyrion Music Server. Servers found on your network are shown below.",
+    "host": "Server IP address",
+    "port": "Port",
+    "username": "Username (optional)",
+    "password": "Password (optional)",
+    "connect": "Connect",
+    "host_missing": "Enter the server IP address",
+    "connect_failed": "Could not connect to Lyrion: __error__"
+  },
+  "settings": {
+    "save": "Save",
+    "saved": "Saved"
+  }
+}

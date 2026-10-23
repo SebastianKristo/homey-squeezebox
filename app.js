@@ -43,6 +43,26 @@ class SqueezeboxApp extends Homey.App {
     this.log('Squeezebox app started');
   }
 
+  // Tests the connection before the settings are saved.
+  async setServer({ host, port, username, password }) {
+    const client = new LyrionClient({ host, port: Number(port) || 9000, username, password });
+    await client.getPlayers();
+    this.homey.settings.set('host', host);
+    this.homey.settings.set('port', String(Number(port) || 9000));
+    this.homey.settings.set('username', username || '');
+    this.homey.settings.set('password', password || '');
+    this._client = client;
+  }
+
+  getServer() {
+    return {
+      host: this.homey.settings.get('host') || '',
+      port: this.homey.settings.get('port') || '9000',
+      username: this.homey.settings.get('username') || '',
+      password: this.homey.settings.get('password') || '',
+    };
+  }
+
   getClient() {
     if (!this._client) {
       const host = this.homey.settings.get('host');

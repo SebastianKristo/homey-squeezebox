@@ -1,1 +1,20 @@
-{ "error": { "no_server": "Sett opp Lyrion-serveren i app-innstillingene først", "disconnected": "Spilleren er ikke koblet til Lyrion" } }
+{
+  "error": {
+    "no_server": "Sett opp Lyrion-serveren i app-innstillingene først",
+    "disconnected": "Spilleren er ikke koblet til Lyrion"
+  },
+  "pair": {
+    "intro": "Skriv inn adressen til Lyrion Music Server. Servere som blir funnet på nettverket vises under.",
+    "host": "Serverens IP-adresse",
+    "port": "Port",
+    "username": "Brukernavn (valgfritt)",
+    "password": "Passord (valgfritt)",
+    "connect": "Koble til",
+    "host_missing": "Skriv inn serverens IP-adresse",
+    "connect_failed": "Fikk ikke kontakt med Lyrion: __error__"
+  },
+  "settings": {
+    "save": "Lagre",
+    "saved": "Lagret"
+  }
+}
