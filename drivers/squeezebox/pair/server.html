@@ -39,7 +39,7 @@
   function connect(server) {
     $('connect').classList.add('is-loading');
     Homey.emit('add_server', server)
-      .then(() => Homey.showView('list_devices'))
+      .then(() => Homey.nextView())
       .catch((err) => Homey.alert(err.message || err))
       .finally(() => $('connect').classList.remove('is-loading'));
   }
@@ -59,13 +59,13 @@
       b.querySelector('small').textContent = `${s.host}:${s.port}${s.saved ? ' · ' + Homey.__('pair.saved') : ''}`;
       b.onclick = () => {
         if (s.saved) {
-          Homey.emit('select_server', s.id).then(() => Homey.showView('list_devices')).catch((e) => Homey.alert(e.message || e));
+          Homey.emit('select_server', s.id).then(() => Homey.nextView()).catch((e) => Homey.alert(e.message || e));
         } else {
           // Try without a password first; ask for one if the server needs it.
           uuid = s.uuid; name = s.name;
           $('host').value = s.host; $('port').value = s.port;
           Homey.emit('add_server', { uuid, name, host: s.host, port: s.port })
-            .then(() => Homey.showView('list_devices'))
+            .then(() => Homey.nextView())
             .catch(() => { $('manual').open = true; Homey.alert(Homey.__('pair.needs_login')); });
         }
       };
