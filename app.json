@@ -73,6 +73,48 @@
             "filter": "driver_id=squeezebox|squeezebox_radio|squeezebox_boom|squeezebox_touch"
           }
         ]
+      },
+      {
+        "id": "alarm_started",
+        "title": {
+          "en": "An alarm went off",
+          "no": "En alarm startet"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=squeezebox|squeezebox_radio|squeezebox_boom|squeezebox_touch"
+          }
+        ]
+      },
+      {
+        "id": "alarm_snoozed",
+        "title": {
+          "en": "An alarm was snoozed",
+          "no": "En alarm ble slumret"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=squeezebox|squeezebox_radio|squeezebox_boom|squeezebox_touch"
+          }
+        ]
+      },
+      {
+        "id": "alarm_ended",
+        "title": {
+          "en": "An alarm ended",
+          "no": "En alarm stoppet"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=squeezebox|squeezebox_radio|squeezebox_boom|squeezebox_touch"
+          }
+        ]
       }
     ],
     "actions": [
@@ -226,6 +268,44 @@
             "filter": "driver_id=squeezebox|squeezebox_radio|squeezebox_boom|squeezebox_touch"
           }
         ]
+      },
+      {
+        "id": "set_alarms_enabled",
+        "title": {
+          "en": "Turn alarms on or off",
+          "no": "Slå alarmer av eller på"
+        },
+        "titleFormatted": {
+          "en": "Turn alarms [[state]]",
+          "no": "Slå alarmer [[state]]"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=squeezebox|squeezebox_radio|squeezebox_boom|squeezebox_touch"
+          },
+          {
+            "type": "dropdown",
+            "name": "state",
+            "values": [
+              {
+                "id": "1",
+                "label": {
+                  "en": "on",
+                  "no": "på"
+                }
+              },
+              {
+                "id": "0",
+                "label": {
+                  "en": "off",
+                  "no": "av"
+                }
+              }
+            ]
+          }
+        ]
       }
     ]
   },
@@ -252,7 +332,18 @@
         "preset_3",
         "preset_4",
         "preset_5",
-        "preset_6"
+        "preset_6",
+        "sb_alarms_enabled",
+        "sb_alarm_active",
+        "sb_alarm_snoozed",
+        "sb_alarm_upcoming",
+        "sb_alarm_next",
+        "bass_down",
+        "bass_up",
+        "brightness_down",
+        "brightness_up",
+        "treble_down",
+        "treble_up"
       ],
       "platforms": [
         "local"
@@ -301,7 +392,18 @@
         "preset_3",
         "preset_4",
         "preset_5",
-        "preset_6"
+        "preset_6",
+        "sb_alarms_enabled",
+        "sb_alarm_active",
+        "sb_alarm_snoozed",
+        "sb_alarm_upcoming",
+        "sb_alarm_next",
+        "bass_down",
+        "bass_up",
+        "brightness_down",
+        "brightness_up",
+        "treble_down",
+        "treble_up"
       ],
       "platforms": [
         "local"
@@ -350,7 +452,18 @@
         "preset_3",
         "preset_4",
         "preset_5",
-        "preset_6"
+        "preset_6",
+        "sb_alarms_enabled",
+        "sb_alarm_active",
+        "sb_alarm_snoozed",
+        "sb_alarm_upcoming",
+        "sb_alarm_next",
+        "bass_down",
+        "bass_up",
+        "brightness_down",
+        "brightness_up",
+        "treble_down",
+        "treble_up"
       ],
       "platforms": [
         "local"
@@ -399,7 +512,18 @@
         "preset_3",
         "preset_4",
         "preset_5",
-        "preset_6"
+        "preset_6",
+        "sb_alarms_enabled",
+        "sb_alarm_active",
+        "sb_alarm_snoozed",
+        "sb_alarm_upcoming",
+        "sb_alarm_next",
+        "bass_down",
+        "bass_up",
+        "brightness_down",
+        "brightness_up",
+        "treble_down",
+        "treble_up"
       ],
       "platforms": [
         "local"
@@ -493,6 +617,127 @@
       "setable": true,
       "uiComponent": "button",
       "uiQuickAction": false
+    },
+    "bass_up": {
+      "type": "boolean",
+      "title": {
+        "en": "Bass up",
+        "no": "Bass opp"
+      },
+      "getable": false,
+      "setable": true,
+      "uiComponent": "button",
+      "uiQuickAction": false
+    },
+    "bass_down": {
+      "type": "boolean",
+      "title": {
+        "en": "Bass down",
+        "no": "Bass ned"
+      },
+      "getable": false,
+      "setable": true,
+      "uiComponent": "button",
+      "uiQuickAction": false
+    },
+    "treble_up": {
+      "type": "boolean",
+      "title": {
+        "en": "Treble up",
+        "no": "Diskant opp"
+      },
+      "getable": false,
+      "setable": true,
+      "uiComponent": "button",
+      "uiQuickAction": false
+    },
+    "treble_down": {
+      "type": "boolean",
+      "title": {
+        "en": "Treble down",
+        "no": "Diskant ned"
+      },
+      "getable": false,
+      "setable": true,
+      "uiComponent": "button",
+      "uiQuickAction": false
+    },
+    "brightness_up": {
+      "type": "boolean",
+      "title": {
+        "en": "Brightness up",
+        "no": "Lysstyrke opp"
+      },
+      "getable": false,
+      "setable": true,
+      "uiComponent": "button",
+      "uiQuickAction": false
+    },
+    "brightness_down": {
+      "type": "boolean",
+      "title": {
+        "en": "Brightness down",
+        "no": "Lysstyrke ned"
+      },
+      "getable": false,
+      "setable": true,
+      "uiComponent": "button",
+      "uiQuickAction": false
+    },
+    "sb_alarm_active": {
+      "type": "boolean",
+      "title": {
+        "en": "Alarm active",
+        "no": "Alarm aktiv"
+      },
+      "getable": true,
+      "setable": false,
+      "uiComponent": "sensor",
+      "insights": false
+    },
+    "sb_alarm_snoozed": {
+      "type": "boolean",
+      "title": {
+        "en": "Alarm snoozed",
+        "no": "Alarm slumrer"
+      },
+      "getable": true,
+      "setable": false,
+      "uiComponent": "sensor",
+      "insights": false
+    },
+    "sb_alarm_upcoming": {
+      "type": "boolean",
+      "title": {
+        "en": "Alarm upcoming",
+        "no": "Alarm innen 24 t"
+      },
+      "getable": true,
+      "setable": false,
+      "uiComponent": "sensor",
+      "insights": false
+    },
+    "sb_alarm_next": {
+      "type": "string",
+      "title": {
+        "en": "Next alarm",
+        "no": "Neste alarm"
+      },
+      "getable": true,
+      "setable": false,
+      "uiComponent": "sensor",
+      "insights": false
+    },
+    "sb_alarms_enabled": {
+      "type": "boolean",
+      "title": {
+        "en": "Alarms enabled",
+        "no": "Alarmer på"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": null,
+      "insights": false
     }
   }
 }

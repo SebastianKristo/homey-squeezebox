@@ -11,6 +11,8 @@ Then open the app settings in Homey, enter the Lyrion server IP (port 9000), and
 
 ## Features
 - Separate device types for Squeezebox Radio, Boom and Touch (plus a generic one for other players)
+- Alarms: on/off, active, snoozed, upcoming, next alarm (+ flow triggers)
+- Bass, treble and brightness buttons
 - Preset buttons 1–6 (and a "play preset" flow card)
 - Power, play/pause, next/previous, volume, mute
 - Now playing: artist, album, track, album art
