@@ -1,6 +1,7 @@
 'use strict';
 
 const LyrionClient = require('./lib/LyrionClient');
+const discover = require('./lib/discover');
 
 function devicesOn(homey, serverId) {
   return Object.values(homey.drivers.getDrivers())
@@ -28,6 +29,24 @@ module.exports = {
     };
     await new LyrionClient(updated).getPlayers();
     homey.app.saveServer(updated);
+  },
+
+  async addServer({ homey, body }) {
+    if (!body.host) throw new Error(homey.__('pair.host_missing'));
+    try {
+      return await homey.app.addServer(body);
+    } catch (err) {
+      throw new Error(homey.__('pair.connect_failed', { error: err.message }));
+    }
+  },
+
+  // Adds every server on the network that answers without a password.
+  async discoverServers({ homey }) {
+    const found = await discover();
+    for (const server of found) {
+      await homey.app.addServer(server).catch(() => {});
+    }
+    return found.length;
   },
 
   async deleteServer({ homey, params }) {

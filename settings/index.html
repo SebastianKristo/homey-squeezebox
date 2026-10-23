@@ -15,6 +15,23 @@
   <h1 class="homey-title">Lyrion Music Server</h1>
   <p class="homey-subtitle" data-i18n="settings.intro"></p>
   <div id="servers"></div>
+
+  <button id="search" class="homey-button-secondary-full" data-i18n="settings.search"></button>
+
+  <h2 class="homey-title" data-i18n="settings.add"></h2>
+  <fieldset class="homey-form-fieldset">
+    <div class="homey-form-group"><label class="homey-form-label" for="host" data-i18n="pair.host"></label>
+      <input class="homey-form-input" id="host" type="text" placeholder="192.168.1.10"></div>
+    <div class="homey-form-group"><label class="homey-form-label" for="port" data-i18n="pair.port"></label>
+      <input class="homey-form-input" id="port" type="number" placeholder="9000"></div>
+    <div class="homey-form-group"><label class="homey-form-label" for="username" data-i18n="pair.username"></label>
+      <input class="homey-form-input" id="username" type="text" autocomplete="off"></div>
+    <div class="homey-form-group"><label class="homey-form-label" for="password" data-i18n="pair.password"></label>
+      <input class="homey-form-input" id="password" type="password" autocomplete="off"></div>
+  </fieldset>
+  <button id="add" class="homey-button-primary-full" data-i18n="settings.add"></button>
+
+  <p class="hint" data-i18n="settings.unofficial" style="margin-top:24px"></p>
   <script>
     function esc(s) { const d = document.createElement('div'); d.textContent = s == null ? '' : s; return d.innerHTML; }
 
@@ -64,6 +81,27 @@
           });
         });
       }
+
+      const $ = (id) => document.getElementById(id);
+      $('add').onclick = () => {
+        const body = { host: $('host').value.trim(), port: $('port').value.trim(), username: $('username').value.trim(), password: $('password').value };
+        $('add').classList.add('is-loading');
+        Homey.api('POST', '/servers', body, (e) => {
+          $('add').classList.remove('is-loading');
+          if (e) return Homey.alert(e.message || e);
+          ['host', 'port', 'username', 'password'].forEach((k) => { $(k).value = ''; });
+          render();
+        });
+      };
+      $('search').onclick = () => {
+        $('search').classList.add('is-loading');
+        Homey.api('POST', '/discover', null, (e, count) => {
+          $('search').classList.remove('is-loading');
+          if (e) return Homey.alert(e.message || e);
+          Homey.alert(Homey.__('settings.found') + count);
+          render();
+        });
+      };
 
       render();
       Homey.ready();

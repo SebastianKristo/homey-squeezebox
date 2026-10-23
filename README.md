@@ -11,10 +11,10 @@ Controls Squeezebox Radio / Boom / Touch (and any other player) through Lyrion M
     homey login
     homey app install      # or `homey app run` for live logs
 
-Then add a device (Squeezebox Radio, Boom, Touch or Other Squeezebox player). The app searches your network for Lyrion servers; pick one, or enter the address yourself (port 9000).
+Then add a device (Squeezebox Radio, Boom, Touch or Other Squeezebox player). The app searches your network for Lyrion servers and lists the players on all of them. If your server has a password or isn't found, add it first under the app settings (port 9000).
 
 ### Several Lyrion servers
-Each player remembers which server it belongs to, so players can be spread over several servers (e.g. the Radio on one and the Touch on another). Add the players from each server separately. Servers can be edited or removed in the app settings. If a server gets a new IP address, or a player is moved to another server you have added, the app finds it again by itself.
+Each player remembers which server it belongs to, so players can be spread over several servers (e.g. the Radio on one and the Touch on another). Players from all servers are listed together, with the server name after the player name. Servers can be added, edited or removed in the app settings. If a server gets a new IP address, or a player is moved to another server you have added, the app finds it again by itself.
 
 ## Features
 - Separate device types for Squeezebox Radio, Boom and Touch (plus a generic one for other players)

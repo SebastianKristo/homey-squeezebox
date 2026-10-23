@@ -4,27 +4,25 @@
     "disconnected": "Spilleren er ikke koblet til Lyrion"
   },
   "pair": {
-    "intro": "Velg Lyrion Music Server. Har du flere servere, legger du til spillerne fra hver server for seg.",
+    "none_found": "Fant ingen Lyrion-server på nettverket. Legg den til i app-innstillingene (Apper → Squeezebox (Lyrion) → Konfigurer app) og prøv igjen.",
     "host": "Serverens IP-adresse",
     "port": "Port",
     "username": "Brukernavn (valgfritt)",
     "password": "Passord (valgfritt)",
-    "connect": "Koble til",
-    "host_missing": "Skriv inn serverens IP-adresse",
     "connect_failed": "Fikk ikke kontakt med Lyrion: __error__",
-    "searching": "Søker etter Lyrion-servere …",
-    "none_found": "Fant ingen Lyrion-servere på nettverket. Skriv inn adressen under.",
-    "manual": "Skriv inn serveradresse selv",
-    "saved": "lagt til",
-    "needs_login": "Fikk ikke kontakt. Hvis serveren har passord, fyller du inn brukernavn og passord under."
+    "host_missing": "Skriv inn serverens IP-adresse"
   },
   "settings": {
     "save": "Lagre",
     "saved": "Lagret",
-    "intro": "Lyrion-serverne appen bruker. Nye servere legges til når du legger til en spiller.",
+    "intro": "Lyrion-serverne appen bruker. Servere på nettverket blir funnet automatisk når du legger til en spiller. Legg til en server her hvis den har passord eller ikke blir funnet.",
     "remove": "Fjern",
     "none": "Ingen servere ennå. Legg til en spiller for å komme i gang.",
     "in_use": "Denne serveren har fortsatt spillere i Homey. Fjern dem først.",
-    "test_failed": "Fikk ikke kontakt: "
+    "test_failed": "Fikk ikke kontakt: ",
+    "add": "Legg til server",
+    "search": "Søk på nettverket",
+    "found": "Servere funnet: ",
+    "unofficial": "Uoffisiell app. Ikke laget eller støttet av Lyrion / LMS Community eller Logitech."
   }
 }

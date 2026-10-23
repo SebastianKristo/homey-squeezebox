@@ -1,4 +1,7 @@
 {
+  "1.0.2": {
+    "en": "homey app version patch     # endringslogg: Fixed an error when choosing a Lyrion server while adding a player."
+  },
   "1.0.1": {
     "en": "Fixed an error when choosing a Lyrion server while adding a player.",
     "no": "Rettet en feil når man velger Lyrion-server mens man legger til en spiller."
@@ -6,8 +9,5 @@
   "1.0.0": {
     "en": "First release.",
     "no": "Første versjon."
-  },
-  "1.0.2": {
-    "en": "homey app version patch     # endringslogg: Fixed an error when choosing a Lyrion server while adding a player."
   }
 }

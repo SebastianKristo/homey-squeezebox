@@ -11,42 +11,35 @@ class SqueezeboxDriver extends Homey.Driver {
     return own ? model === own : !Object.values(MODELS).includes(model);
   }
 
-  async onPair(session) {
-    let serverId = null;
+  // Lists players from every Lyrion server: the ones already added, plus any
+  // new servers found on the network. Servers with a password are added in
+  // the app settings.
+  async onPairListDevices() {
+    const { app } = this.homey;
+    for (const found of await discover()) {
+      const known = app.getServers().some((s) => s.id === found.uuid || (s.host === found.host && s.port === found.port));
+      if (!known) await app.addServer(found).catch((err) => this.log(`Skipping ${found.host}: ${err.message}`));
+    }
 
-    // Saved servers first, then any new ones found on the network.
-    session.setHandler('get_servers', async () => {
-      const saved = this.homey.app.getServers().map((s) => ({ ...s, password: undefined, saved: true }));
-      const found = (await discover())
-        .filter((f) => !saved.some((s) => s.id === f.uuid || (s.host === f.host && s.port === f.port)))
-        .map((f) => ({ ...f, saved: false }));
-      return [...saved, ...found];
-    });
+    const servers = app.getServers();
+    if (!servers.length) throw new Error(this.homey.__('pair.none_found'));
 
-    session.setHandler('select_server', async (id) => {
-      this.homey.app.getClientFor(id);
-      serverId = id;
-    });
-
-    session.setHandler('add_server', async (server) => {
-      try {
-        serverId = await this.homey.app.addServer(server);
-      } catch (err) {
-        throw new Error(this.homey.__('pair.connect_failed', { error: err.message }));
-      }
-    });
-
-    session.setHandler('list_devices', async () => {
-      const players = await this.homey.app.getClientFor(serverId).getPlayers();
-      const paired = this.getDevices().map((d) => d.getData().id);
-      return players
+    const paired = this.getDevices().map((d) => d.getData().id);
+    const devices = [];
+    for (const server of servers) {
+      const players = await app.getClientFor(server.id).getPlayers().catch((err) => {
+        this.error(`Server ${server.name}:`, err.message);
+        return [];
+      });
+      players
         .filter((p) => this.matchesModel(p.model) && !paired.includes(p.playerid))
-        .map((p) => ({
-          name: p.name,
+        .forEach((p) => devices.push({
+          name: servers.length > 1 ? `${p.name} (${server.name})` : p.name,
           data: { id: p.playerid },
-          store: { serverId, model: p.modelname || p.model },
+          store: { serverId: server.id, model: p.modelname || p.model },
         }));
-    });
+    }
+    return devices;
   }
 }
 

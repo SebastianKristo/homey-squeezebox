@@ -383,16 +383,9 @@
       },
       "pair": [
         {
-          "id": "server",
-          "navigation": {
-            "next": "list_devices"
-          }
-        },
-        {
           "id": "list_devices",
           "template": "list_devices",
           "navigation": {
-            "prev": "server",
             "next": "add_devices"
           }
         },
@@ -450,16 +443,9 @@
       },
       "pair": [
         {
-          "id": "server",
-          "navigation": {
-            "next": "list_devices"
-          }
-        },
-        {
           "id": "list_devices",
           "template": "list_devices",
           "navigation": {
-            "prev": "server",
             "next": "add_devices"
           }
         },
@@ -517,16 +503,9 @@
       },
       "pair": [
         {
-          "id": "server",
-          "navigation": {
-            "next": "list_devices"
-          }
-        },
-        {
           "id": "list_devices",
           "template": "list_devices",
           "navigation": {
-            "prev": "server",
             "next": "add_devices"
           }
         },
@@ -584,16 +563,9 @@
       },
       "pair": [
         {
-          "id": "server",
-          "navigation": {
-            "next": "list_devices"
-          }
-        },
-        {
           "id": "list_devices",
           "template": "list_devices",
           "navigation": {
-            "prev": "server",
             "next": "add_devices"
           }
         },
@@ -805,6 +777,14 @@
     "deleteServer": {
       "method": "DELETE",
       "path": "/servers/:id"
+    },
+    "addServer": {
+      "method": "POST",
+      "path": "/servers"
+    },
+    "discoverServers": {
+      "method": "POST",
+      "path": "/discover"
     }
   }
 }

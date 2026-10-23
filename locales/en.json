@@ -4,27 +4,25 @@
     "disconnected": "Player is not connected to Lyrion"
   },
   "pair": {
-    "intro": "Choose your Lyrion Music Server. If you have more than one, add the players from each server separately.",
+    "none_found": "No Lyrion server was found on your network. Add it in the app settings (Apps → Squeezebox (Lyrion) → Configure app) and try again.",
     "host": "Server IP address",
     "port": "Port",
     "username": "Username (optional)",
     "password": "Password (optional)",
-    "connect": "Connect",
-    "host_missing": "Enter the server IP address",
     "connect_failed": "Could not connect to Lyrion: __error__",
-    "searching": "Searching for Lyrion servers…",
-    "none_found": "No Lyrion servers were found on your network. Enter the address below.",
-    "manual": "Enter server address manually",
-    "saved": "added",
-    "needs_login": "Could not connect. If the server is password protected, enter username and password below."
+    "host_missing": "Enter the server IP address"
   },
   "settings": {
     "save": "Save",
     "saved": "Saved",
-    "intro": "Lyrion servers used by this app. New servers are added when you add a player.",
+    "intro": "Lyrion servers used by this app. Servers on your network are found automatically when you add a player. Add a server here if it has a password or isn't found.",
     "remove": "Remove",
     "none": "No servers yet. Add a player to get started.",
     "in_use": "This server still has players in Homey. Remove them first.",
-    "test_failed": "Could not connect: "
+    "test_failed": "Could not connect: ",
+    "add": "Add server",
+    "search": "Search network",
+    "found": "Servers found: ",
+    "unofficial": "Unofficial app. Not made or supported by the Lyrion / LMS Community or Logitech."
   }
 }
