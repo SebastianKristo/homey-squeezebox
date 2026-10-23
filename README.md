@@ -12,5 +12,6 @@ Then open the app settings in Homey, enter the Lyrion server IP (port 9000), and
 ## Features
 - Power, play/pause, next/previous, volume, mute
 - Now playing: artist, album, track, album art
+- Flow trigger: track changed (tokens: track, artist, album)
 - Flows: play favorite, play URL/stream, sync/unsync players
 - Status polled every 5 s

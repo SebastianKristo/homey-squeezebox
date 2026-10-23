@@ -19,6 +19,7 @@ class SqueezeboxDevice extends Homey.Device {
     this.image.setUrl(null);
     await this.setAlbumArtImage(this.image);
     this.lastCoverKey = null;
+    this.lastTrackKey = null;
 
     this.poll();
     this.pollTimer = this.homey.setInterval(() => this.poll(), POLL_INTERVAL);
@@ -54,9 +55,23 @@ class SqueezeboxDevice extends Homey.Device {
       await this.set('speaker_playing', s.mode === 'play');
       await this.set('volume_set', Math.abs(vol) / 100);
       await this.set('volume_mute', vol < 0);
-      await this.set('speaker_track', meta.title || track.title || s.current_title || '');
-      await this.set('speaker_artist', meta.artist || track.artist || '');
-      await this.set('speaker_album', meta.album || track.album || '');
+      const tokens = {
+        track: meta.title || track.title || s.current_title || '',
+        artist: meta.artist || track.artist || '',
+        album: meta.album || track.album || '',
+      };
+      await this.set('speaker_track', tokens.track);
+      await this.set('speaker_artist', tokens.artist);
+      await this.set('speaker_album', tokens.album);
+
+      const trackKey = `${tokens.track}|${tokens.artist}|${tokens.album}`;
+      // Skip the first poll so restarting the app doesn't fire the trigger.
+      if (this.lastTrackKey !== null && trackKey !== this.lastTrackKey && tokens.track) {
+        this.homey.flow.getDeviceTriggerCard('track_changed')
+          .trigger(this, tokens)
+          .catch(this.error);
+      }
+      this.lastTrackKey = trackKey;
 
       const coverKey = `${track.id}|${track.coverid}|${meta.title}|${track.artwork_url}`;
       if (coverKey !== this.lastCoverKey) {
