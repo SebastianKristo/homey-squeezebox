@@ -8,6 +8,13 @@ class SqueezeboxDevice extends Homey.Device {
   async onInit() {
     this.playerId = this.getData().id;
 
+    // Devices paired before presets existed need the new capabilities.
+    for (let i = 1; i <= 6; i++) {
+      const cap = `preset_${i}`;
+      if (!this.hasCapability(cap)) await this.addCapability(cap).catch(this.error);
+      this.registerCapabilityListener(cap, () => this.playPreset(i));
+    }
+
     this.registerCapabilityListener('onoff', (v) => this.command(['power', v ? 1 : 0]));
     this.registerCapabilityListener('speaker_playing', (v) => this.command(v ? ['play'] : ['pause', 1]));
     this.registerCapabilityListener('speaker_next', () => this.command(['playlist', 'index', '+1']));
@@ -32,6 +39,10 @@ class SqueezeboxDevice extends Homey.Device {
   async command(cmd) {
     await this.client.request(this.playerId, cmd);
     this.homey.setTimeout(() => this.poll(), 500);
+  }
+
+  async playPreset(n) {
+    await this.command(['button', `preset_${n}.single`]);
   }
 
   async playFavorite(id) {

@@ -70,7 +70,7 @@
           {
             "type": "device",
             "name": "device",
-            "filter": "driver_id=squeezebox"
+            "filter": "driver_id=squeezebox|squeezebox_radio|squeezebox_boom|squeezebox_touch"
           }
         ]
       }
@@ -90,7 +90,7 @@
           {
             "type": "device",
             "name": "device",
-            "filter": "driver_id=squeezebox"
+            "filter": "driver_id=squeezebox|squeezebox_radio|squeezebox_boom|squeezebox_touch"
           },
           {
             "type": "autocomplete",
@@ -99,6 +99,66 @@
               "en": "Favorite",
               "no": "Favoritt"
             }
+          }
+        ]
+      },
+      {
+        "id": "play_preset",
+        "title": {
+          "en": "Play preset",
+          "no": "Spill preset"
+        },
+        "titleFormatted": {
+          "en": "Play preset [[preset]]",
+          "no": "Spill preset [[preset]]"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=squeezebox|squeezebox_radio|squeezebox_boom|squeezebox_touch"
+          },
+          {
+            "type": "dropdown",
+            "name": "preset",
+            "values": [
+              {
+                "id": "1",
+                "label": {
+                  "en": "1"
+                }
+              },
+              {
+                "id": "2",
+                "label": {
+                  "en": "2"
+                }
+              },
+              {
+                "id": "3",
+                "label": {
+                  "en": "3"
+                }
+              },
+              {
+                "id": "4",
+                "label": {
+                  "en": "4"
+                }
+              },
+              {
+                "id": "5",
+                "label": {
+                  "en": "5"
+                }
+              },
+              {
+                "id": "6",
+                "label": {
+                  "en": "6"
+                }
+              }
+            ]
           }
         ]
       },
@@ -116,7 +176,7 @@
           {
             "type": "device",
             "name": "device",
-            "filter": "driver_id=squeezebox"
+            "filter": "driver_id=squeezebox|squeezebox_radio|squeezebox_boom|squeezebox_touch"
           },
           {
             "type": "text",
@@ -141,7 +201,7 @@
           {
             "type": "device",
             "name": "device",
-            "filter": "driver_id=squeezebox"
+            "filter": "driver_id=squeezebox|squeezebox_radio|squeezebox_boom|squeezebox_touch"
           },
           {
             "type": "autocomplete",
@@ -163,7 +223,7 @@
           {
             "type": "device",
             "name": "device",
-            "filter": "driver_id=squeezebox"
+            "filter": "driver_id=squeezebox|squeezebox_radio|squeezebox_boom|squeezebox_touch"
           }
         ]
       }
@@ -171,10 +231,10 @@
   },
   "drivers": [
     {
-      "id": "squeezebox",
+      "id": "squeezebox_radio",
       "name": {
-        "en": "Squeezebox player",
-        "no": "Squeezebox-spiller"
+        "en": "Squeezebox Radio",
+        "no": "Squeezebox Radio"
       },
       "class": "speaker",
       "capabilities": [
@@ -186,7 +246,160 @@
         "volume_mute",
         "speaker_artist",
         "speaker_album",
-        "speaker_track"
+        "speaker_track",
+        "preset_1",
+        "preset_2",
+        "preset_3",
+        "preset_4",
+        "preset_5",
+        "preset_6"
+      ],
+      "platforms": [
+        "local"
+      ],
+      "connectivity": [
+        "lan"
+      ],
+      "images": {
+        "small": "/drivers/squeezebox_radio/assets/images/small.png",
+        "large": "/drivers/squeezebox_radio/assets/images/large.png",
+        "xlarge": "/drivers/squeezebox_radio/assets/images/xlarge.png"
+      },
+      "pair": [
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "navigation": {
+            "next": "add_devices"
+          }
+        },
+        {
+          "id": "add_devices",
+          "template": "add_devices"
+        }
+      ]
+    },
+    {
+      "id": "squeezebox_boom",
+      "name": {
+        "en": "Squeezebox Boom",
+        "no": "Squeezebox Boom"
+      },
+      "class": "speaker",
+      "capabilities": [
+        "onoff",
+        "speaker_playing",
+        "speaker_next",
+        "speaker_prev",
+        "volume_set",
+        "volume_mute",
+        "speaker_artist",
+        "speaker_album",
+        "speaker_track",
+        "preset_1",
+        "preset_2",
+        "preset_3",
+        "preset_4",
+        "preset_5",
+        "preset_6"
+      ],
+      "platforms": [
+        "local"
+      ],
+      "connectivity": [
+        "lan"
+      ],
+      "images": {
+        "small": "/drivers/squeezebox_boom/assets/images/small.png",
+        "large": "/drivers/squeezebox_boom/assets/images/large.png",
+        "xlarge": "/drivers/squeezebox_boom/assets/images/xlarge.png"
+      },
+      "pair": [
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "navigation": {
+            "next": "add_devices"
+          }
+        },
+        {
+          "id": "add_devices",
+          "template": "add_devices"
+        }
+      ]
+    },
+    {
+      "id": "squeezebox_touch",
+      "name": {
+        "en": "Squeezebox Touch",
+        "no": "Squeezebox Touch"
+      },
+      "class": "speaker",
+      "capabilities": [
+        "onoff",
+        "speaker_playing",
+        "speaker_next",
+        "speaker_prev",
+        "volume_set",
+        "volume_mute",
+        "speaker_artist",
+        "speaker_album",
+        "speaker_track",
+        "preset_1",
+        "preset_2",
+        "preset_3",
+        "preset_4",
+        "preset_5",
+        "preset_6"
+      ],
+      "platforms": [
+        "local"
+      ],
+      "connectivity": [
+        "lan"
+      ],
+      "images": {
+        "small": "/drivers/squeezebox_touch/assets/images/small.png",
+        "large": "/drivers/squeezebox_touch/assets/images/large.png",
+        "xlarge": "/drivers/squeezebox_touch/assets/images/xlarge.png"
+      },
+      "pair": [
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "navigation": {
+            "next": "add_devices"
+          }
+        },
+        {
+          "id": "add_devices",
+          "template": "add_devices"
+        }
+      ]
+    },
+    {
+      "id": "squeezebox",
+      "name": {
+        "en": "Other Squeezebox player",
+        "no": "Annen Squeezebox-spiller"
+      },
+      "class": "speaker",
+      "capabilities": [
+        "onoff",
+        "speaker_playing",
+        "speaker_next",
+        "speaker_prev",
+        "volume_set",
+        "volume_mute",
+        "speaker_artist",
+        "speaker_album",
+        "speaker_track",
+        "preset_1",
+        "preset_2",
+        "preset_3",
+        "preset_4",
+        "preset_5",
+        "preset_6"
       ],
       "platforms": [
         "local"
@@ -213,5 +426,73 @@
         }
       ]
     }
-  ]
+  ],
+  "capabilities": {
+    "preset_1": {
+      "type": "boolean",
+      "title": {
+        "en": "Preset 1",
+        "no": "Preset 1"
+      },
+      "getable": false,
+      "setable": true,
+      "uiComponent": "button",
+      "uiQuickAction": false
+    },
+    "preset_2": {
+      "type": "boolean",
+      "title": {
+        "en": "Preset 2",
+        "no": "Preset 2"
+      },
+      "getable": false,
+      "setable": true,
+      "uiComponent": "button",
+      "uiQuickAction": false
+    },
+    "preset_3": {
+      "type": "boolean",
+      "title": {
+        "en": "Preset 3",
+        "no": "Preset 3"
+      },
+      "getable": false,
+      "setable": true,
+      "uiComponent": "button",
+      "uiQuickAction": false
+    },
+    "preset_4": {
+      "type": "boolean",
+      "title": {
+        "en": "Preset 4",
+        "no": "Preset 4"
+      },
+      "getable": false,
+      "setable": true,
+      "uiComponent": "button",
+      "uiQuickAction": false
+    },
+    "preset_5": {
+      "type": "boolean",
+      "title": {
+        "en": "Preset 5",
+        "no": "Preset 5"
+      },
+      "getable": false,
+      "setable": true,
+      "uiComponent": "button",
+      "uiQuickAction": false
+    },
+    "preset_6": {
+      "type": "boolean",
+      "title": {
+        "en": "Preset 6",
+        "no": "Preset 6"
+      },
+      "getable": false,
+      "setable": true,
+      "uiComponent": "button",
+      "uiQuickAction": false
+    }
+  }
 }

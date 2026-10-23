@@ -18,6 +18,9 @@ class SqueezeboxApp extends Homey.App {
           .map((f) => ({ name: f.name, id: f.id }));
       });
 
+    this.homey.flow.getActionCard('play_preset')
+      .registerRunListener(async (args) => deviceArg(args).playPreset(Number(args.preset)));
+
     this.homey.flow.getActionCard('play_url')
       .registerRunListener(async (args) => deviceArg(args).command(['playlist', 'play', args.url]));
 
