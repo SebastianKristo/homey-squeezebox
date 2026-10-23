@@ -1,6 +1,7 @@
 'use strict';
 
 const Homey = require('homey');
+const artwork = require('../../lib/artwork');
 
 const POLL_INTERVAL = 5000;
 
@@ -106,6 +107,16 @@ class SqueezeboxDevice extends Homey.Device {
         artist: meta.artist || track.artist || '',
         album: meta.album || track.album || '',
       };
+      // Radio streams often put "Artist - Title" in the title and leave artist empty.
+      const isStream = s.remote === 1 || track.remote === 1;
+      if (isStream && !tokens.artist) {
+        const parsed = artwork.parseStreamTitle(tokens.track);
+        if (parsed) {
+          tokens.album = tokens.album || track.remote_title || '';
+          tokens.artist = parsed.artist;
+          tokens.track = parsed.title;
+        }
+      }
       await this.set('speaker_track', tokens.track);
       await this.set('speaker_artist', tokens.artist);
       await this.set('speaker_album', tokens.album);
@@ -121,10 +132,18 @@ class SqueezeboxDevice extends Homey.Device {
 
       await this.updateAlarms(s);
 
-      const coverKey = `${track.id}|${track.coverid}|${meta.title}|${track.artwork_url || meta.artwork_url}`;
+      const coverKey = `${track.id}|${track.coverid}|${tokens.track}|${tokens.artist}|${track.artwork_url || meta.artwork_url}`;
       if (coverKey !== this.lastCoverKey) {
         this.lastCoverKey = coverKey;
-        this.artUrls = this.client.artworkUrls(this.playerId, track.artwork_url || meta.artwork_url);
+        let art = track.artwork_url || meta.artwork_url;
+        if (artwork.isPlaceholder(art)) art = null;
+        const urls = this.client.artworkUrls(this.playerId, art);
+        // Streams without their own cover: look the song up by artist and title.
+        if (isStream && !art && tokens.artist && tokens.track) {
+          const found = await artwork.lookupCover(tokens.artist, tokens.track);
+          if (found) urls.unshift(found);
+        }
+        this.artUrls = urls;
         await this.image.update();
       }
     } catch (err) {

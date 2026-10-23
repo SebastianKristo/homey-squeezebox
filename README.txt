@@ -2,7 +2,7 @@ Control your Squeezebox Radio, Squeezebox Boom, Squeezebox Touch and other Squee
 
 Features:
 - Power, play/pause, next/previous track, volume and mute
-- Now playing in the Homey media player: track, artist, album and album art
+- Now playing in the Homey media player: track, artist, album and album art (for internet radio, the cover is looked up online from artist and title)
 - Preset buttons 1–6 and a "Play preset" flow card
 - Alarms: turn alarms on or off, see whether an alarm is ringing, snoozed or due, and when the next alarm goes off
 - Bass, treble and display brightness buttons

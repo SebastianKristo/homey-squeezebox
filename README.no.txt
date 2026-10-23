@@ -2,7 +2,7 @@ Styr Squeezebox Radio, Squeezebox Boom, Squeezebox Touch og andre Squeezebox-spi
 
 Funksjoner:
 - Av/på, spill/pause, neste/forrige spor, volum og demping
-- Det som spilles vises i Homeys mediaspiller: spor, artist, album og albumcover
+- Det som spilles vises i Homeys mediaspiller: spor, artist, album og albumcover (for nettradio slås coveret opp på nettet ut fra artist og tittel)
 - Presetknapper 1–6 og flow-kortet «Spill preset»
 - Alarmer: slå alarmer av eller på, se om en alarm ringer, slumrer eller snart går av, og når neste alarm er
 - Knapper for bass, diskant og lysstyrke på skjermen

@@ -1,4 +1,8 @@
 {
+  "1.0.4": {
+    "en": "Album art for internet radio: the cover is looked up from the artist and title the station sends. Artist and title are now shown separately for radio.",
+    "no": "Albumcover for nettradio: coveret slås opp ut fra artist og tittel som kanalen sender. Artist og tittel vises nå hver for seg for radio."
+  },
   "1.0.3": {
     "en": "Adding players is simpler: players from all Lyrion servers on your network are listed directly. Servers with a password are added in the app settings. Fixed device icons showing as a filled box.",
     "no": "Enklere å legge til spillere: spillere fra alle Lyrion-servere på nettverket vises direkte. Servere med passord legges til i app-innstillingene. Rettet enhetsikoner som ble vist som en fylt boks."
