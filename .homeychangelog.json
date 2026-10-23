@@ -1,6 +1,11 @@
 {
+  "1.0.3": {
+    "en": "Adding players is simpler: players from all Lyrion servers on your network are listed directly. Servers with a password are added in the app settings.",
+    "no": "Enklere å legge til spillere: spillere fra alle Lyrion-servere på nettverket vises direkte. Servere med passord legges til i app-innstillingene."
+  },
   "1.0.2": {
-    "en": "homey app version patch     # endringslogg: Fixed an error when choosing a Lyrion server while adding a player."
+    "en": "Fixed an error when choosing a Lyrion server while adding a player.",
+    "no": "Rettet en feil når man velger Lyrion-server mens man legger til en spiller."
   },
   "1.0.1": {
     "en": "Fixed an error when choosing a Lyrion server while adding a player.",
