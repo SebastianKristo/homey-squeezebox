@@ -11,8 +11,8 @@
     "no": "Squeezebox (Lyrion)"
   },
   "description": {
-    "en": "Bring your Squeezebox players back to life",
-    "no": "Gi Squeezebox-spillerne dine nytt liv"
+    "en": "Unofficial app for Squeezebox players on Lyrion Music Server",
+    "no": "Uoffisiell app for Squeezebox-spillere med Lyrion Music Server"
   },
   "category": [
     "music"
@@ -791,6 +791,20 @@
       "setable": true,
       "uiComponent": null,
       "insights": false
+    }
+  },
+  "api": {
+    "getServers": {
+      "method": "GET",
+      "path": "/servers"
+    },
+    "updateServer": {
+      "method": "PUT",
+      "path": "/servers/:id"
+    },
+    "deleteServer": {
+      "method": "DELETE",
+      "path": "/servers/:id"
     }
   }
 }

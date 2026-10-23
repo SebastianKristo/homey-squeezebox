@@ -1,27 +1,71 @@
 <!doctype html>
 <html>
-<head><script type="text/javascript" src="/homey.js" data-origin="settings"></script></head>
+<head>
+  <script type="text/javascript" src="/homey.js" data-origin="settings"></script>
+  <style>
+    .server { border: 1px solid var(--homey-color-mono-100, #ddd); border-radius: 10px; padding: 12px 14px; margin-bottom: 14px; }
+    .server h2 { margin: 0 0 4px; font-size: 1.1em; }
+    .server .meta { opacity: .6; margin-bottom: 10px; font-size: .9em; }
+    .row { display: flex; gap: 8px; margin-top: 10px; }
+    .row button { flex: 1; }
+    .hint { opacity: .6; }
+  </style>
+</head>
 <body>
   <h1 class="homey-title">Lyrion Music Server</h1>
-  <fieldset class="homey-form-fieldset">
-    <div class="homey-form-group"><label class="homey-form-label" for="host" data-i18n="pair.host"></label>
-      <input class="homey-form-input" id="host" type="text" placeholder="192.168.1.10"></div>
-    <div class="homey-form-group"><label class="homey-form-label" for="port" data-i18n="pair.port"></label>
-      <input class="homey-form-input" id="port" type="number" placeholder="9000"></div>
-    <div class="homey-form-group"><label class="homey-form-label" for="username" data-i18n="pair.username"></label>
-      <input class="homey-form-input" id="username" type="text" autocomplete="off"></div>
-    <div class="homey-form-group"><label class="homey-form-label" for="password" data-i18n="pair.password"></label>
-      <input class="homey-form-input" id="password" type="password" autocomplete="off"></div>
-  </fieldset>
-  <button id="save" class="homey-button-primary-full" data-i18n="settings.save"></button>
+  <p class="homey-subtitle" data-i18n="settings.intro"></p>
+  <div id="servers"></div>
   <script>
-    const keys = ['host', 'port', 'username', 'password'];
+    function esc(s) { const d = document.createElement('div'); d.textContent = s == null ? '' : s; return d.innerHTML; }
+
     function onHomeyReady(Homey) {
-      keys.forEach((k) => Homey.get(k, (err, v) => { if (v != null) document.getElementById(k).value = v; }));
-      document.getElementById('save').addEventListener('click', () => {
-        keys.forEach((k) => Homey.set(k, document.getElementById(k).value.trim()));
-        Homey.alert(Homey.__('settings.saved'));
-      });
+      const list = document.getElementById('servers');
+
+      function render() {
+        Homey.api('GET', '/servers', null, (err, servers) => {
+          if (err) return Homey.alert(err.message || err);
+          if (!servers.length) { list.innerHTML = `<p class="hint">${esc(Homey.__('settings.none'))}</p>`; return; }
+          list.innerHTML = '';
+          servers.forEach((s) => {
+            const el = document.createElement('div');
+            el.className = 'server';
+            el.innerHTML = `
+              <h2>${esc(s.name)}</h2>
+              <div class="meta">${s.players} × Squeezebox</div>
+              <div class="homey-form-group"><label class="homey-form-label">${esc(Homey.__('pair.host'))}</label>
+                <input class="homey-form-input" data-k="host" value="${esc(s.host)}"></div>
+              <div class="homey-form-group"><label class="homey-form-label">${esc(Homey.__('pair.port'))}</label>
+                <input class="homey-form-input" data-k="port" type="number" value="${esc(s.port)}"></div>
+              <div class="homey-form-group"><label class="homey-form-label">${esc(Homey.__('pair.username'))}</label>
+                <input class="homey-form-input" data-k="username" autocomplete="off" value="${esc(s.username)}"></div>
+              <div class="homey-form-group"><label class="homey-form-label">${esc(Homey.__('pair.password'))}</label>
+                <input class="homey-form-input" data-k="password" type="password" autocomplete="off" placeholder="${s.hasPassword ? '••••••' : ''}"></div>
+              <div class="row">
+                <button class="homey-button-primary save">${esc(Homey.__('settings.save'))}</button>
+                <button class="homey-button-danger remove">${esc(Homey.__('settings.remove'))}</button>
+              </div>`;
+            const val = (k) => el.querySelector(`[data-k="${k}"]`).value.trim();
+            el.querySelector('.save').onclick = () => {
+              const body = { host: val('host'), port: val('port'), username: val('username') };
+              if (val('password')) body.password = val('password');
+              Homey.api('PUT', `/servers/${encodeURIComponent(s.id)}`, body, (e) => {
+                if (e) return Homey.alert(Homey.__('settings.test_failed') + (e.message || e));
+                Homey.alert(Homey.__('settings.saved'));
+                render();
+              });
+            };
+            el.querySelector('.remove').onclick = () => {
+              Homey.api('DELETE', `/servers/${encodeURIComponent(s.id)}`, null, (e) => {
+                if (e) return Homey.alert(e.message || e);
+                render();
+              });
+            };
+            list.appendChild(el);
+          });
+        });
+      }
+
+      render();
       Homey.ready();
     }
   </script>

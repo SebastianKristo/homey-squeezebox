@@ -9,6 +9,6 @@ Funksjoner:
 - Flow-utløsere: sporet endret seg, alarm startet, slumret eller stoppet
 - Flow-handlinger: spill favoritt, spill preset, spill URL/strøm, synkroniser og fjern synkronisering, slå alarmer av eller på
 
-Lyrion-serveren blir funnet automatisk når du legger til en spiller. Appen krever Lyrion Music Server, og serveren må kunne nås fra Homey.
+Lyrion-servere på nettverket blir funnet automatisk når du legger til en spiller, og appen finner serveren igjen hvis IP-adressen endrer seg. Du kan bruke flere Lyrion-servere samtidig, for eksempel én for Squeezebox Radio og en annen for Squeezebox Touch. Appen krever Lyrion Music Server.
 
-Lyrion er et frivillig drevet prosjekt og har ingen tilknytning til denne appen.
+Dette er en uoffisiell app laget av en privatperson. Den er ikke laget, godkjent eller støttet av Lyrion / LMS Community eller Logitech. Lyrion og Lyrion-logoen tilhører LMS Community. Squeezebox og Logitech er varemerker som tilhører Logitech.

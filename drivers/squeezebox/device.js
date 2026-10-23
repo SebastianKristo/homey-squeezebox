@@ -8,6 +8,12 @@ class SqueezeboxDevice extends Homey.Device {
   async onInit() {
     this.playerId = this.getData().id;
 
+    // Devices paired with version 1.0 used the single server from the app settings.
+    if (!this.getStoreValue('serverId') && this.homey.app.legacyServerId) {
+      await this.setStoreValue('serverId', this.homey.app.legacyServerId);
+    }
+    this.failures = 0;
+
     const buttons = {
       bass_up: ['mixer', 'bass', '+5'],
       bass_down: ['mixer', 'bass', '-5'],
@@ -51,7 +57,7 @@ class SqueezeboxDevice extends Homey.Device {
   }
 
   get client() {
-    return this.homey.app.getClient();
+    return this.homey.app.getClientFor(this.getStoreValue('serverId'));
   }
 
   async command(cmd) {
@@ -74,6 +80,13 @@ class SqueezeboxDevice extends Homey.Device {
   async poll() {
     try {
       const s = await this.client.getStatus(this.playerId);
+      this.failures = 0;
+      if (s.mode === undefined) {
+        // The server doesn't know this player any more; it may have moved to another server.
+        await this.moveToServerWithPlayer();
+        await this.setUnavailable(this.homey.__('error.disconnected'));
+        return;
+      }
       if (s.player_connected === 0) {
         await this.setUnavailable(this.homey.__('error.disconnected'));
         return;
@@ -117,6 +130,19 @@ class SqueezeboxDevice extends Homey.Device {
     } catch (err) {
       this.error('Poll failed:', err.message);
       await this.setUnavailable(err.message).catch(() => {});
+      // After a few failures, check whether the server got a new IP address.
+      if (++this.failures === 3) this.homey.app.rediscover().catch(this.error);
+    }
+  }
+
+  async moveToServerWithPlayer() {
+    if (this.lastMoveCheck && Date.now() - this.lastMoveCheck < 60 * 1000) return;
+    this.lastMoveCheck = Date.now();
+    const serverId = await this.homey.app.findPlayer(this.playerId);
+    if (serverId && serverId !== this.getStoreValue('serverId')) {
+      this.log(`Player moved to server ${serverId}`);
+      await this.setStoreValue('serverId', serverId);
+      this.lastCoverKey = null;
     }
   }
 

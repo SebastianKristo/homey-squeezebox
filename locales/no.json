@@ -1,20 +1,30 @@
 {
   "error": {
-    "no_server": "Sett opp Lyrion-serveren i app-innstillingene først",
+    "no_server": "Lyrion-serveren til denne spilleren mangler. Fjern spilleren og legg den til på nytt.",
     "disconnected": "Spilleren er ikke koblet til Lyrion"
   },
   "pair": {
-    "intro": "Skriv inn adressen til Lyrion Music Server. Servere som blir funnet på nettverket vises under.",
+    "intro": "Velg Lyrion Music Server. Har du flere servere, legger du til spillerne fra hver server for seg.",
     "host": "Serverens IP-adresse",
     "port": "Port",
     "username": "Brukernavn (valgfritt)",
     "password": "Passord (valgfritt)",
     "connect": "Koble til",
     "host_missing": "Skriv inn serverens IP-adresse",
-    "connect_failed": "Fikk ikke kontakt med Lyrion: __error__"
+    "connect_failed": "Fikk ikke kontakt med Lyrion: __error__",
+    "searching": "Søker etter Lyrion-servere …",
+    "none_found": "Fant ingen Lyrion-servere på nettverket. Skriv inn adressen under.",
+    "manual": "Skriv inn serveradresse selv",
+    "saved": "lagt til",
+    "needs_login": "Fikk ikke kontakt. Hvis serveren har passord, fyller du inn brukernavn og passord under."
   },
   "settings": {
     "save": "Lagre",
-    "saved": "Lagret"
+    "saved": "Lagret",
+    "intro": "Lyrion-serverne appen bruker. Nye servere legges til når du legger til en spiller.",
+    "remove": "Fjern",
+    "none": "Ingen servere ennå. Legg til en spiller for å komme i gang.",
+    "in_use": "Denne serveren har fortsatt spillere i Homey. Fjern dem først.",
+    "test_failed": "Fikk ikke kontakt: "
   }
 }

@@ -9,6 +9,6 @@ Features:
 - Flow triggers: track changed, alarm started, snoozed or ended
 - Flow actions: play favorite, play preset, play URL/stream, sync and unsync players, turn alarms on or off
 
-Your Lyrion server is found automatically when you add a player. Lyrion Music Server is required and must be reachable from Homey.
+Lyrion servers on your network are found automatically when you add a player, and the app follows a server if its IP address changes. You can use several Lyrion servers at once, for example one for the Squeezebox Radio and another for the Squeezebox Touch. Lyrion Music Server is required.
 
-Lyrion is a community project and is not affiliated with this app.
+This is an unofficial, community-made app. It is not made, endorsed or supported by the Lyrion / LMS Community or by Logitech. Lyrion and the Lyrion logo belong to the LMS Community; Squeezebox and Logitech are trademarks of Logitech.

@@ -1,20 +1,30 @@
 {
   "error": {
-    "no_server": "Configure the Lyrion server in the app settings first",
+    "no_server": "This player's Lyrion server is missing. Remove the player and add it again.",
     "disconnected": "Player is not connected to Lyrion"
   },
   "pair": {
-    "intro": "Enter the address of your Lyrion Music Server. Servers found on your network are shown below.",
+    "intro": "Choose your Lyrion Music Server. If you have more than one, add the players from each server separately.",
     "host": "Server IP address",
     "port": "Port",
     "username": "Username (optional)",
     "password": "Password (optional)",
     "connect": "Connect",
     "host_missing": "Enter the server IP address",
-    "connect_failed": "Could not connect to Lyrion: __error__"
+    "connect_failed": "Could not connect to Lyrion: __error__",
+    "searching": "Searching for Lyrion servers…",
+    "none_found": "No Lyrion servers were found on your network. Enter the address below.",
+    "manual": "Enter server address manually",
+    "saved": "added",
+    "needs_login": "Could not connect. If the server is password protected, enter username and password below."
   },
   "settings": {
     "save": "Save",
-    "saved": "Saved"
+    "saved": "Saved",
+    "intro": "Lyrion servers used by this app. New servers are added when you add a player.",
+    "remove": "Remove",
+    "none": "No servers yet. Add a player to get started.",
+    "in_use": "This server still has players in Homey. Remove them first.",
+    "test_failed": "Could not connect: "
   }
 }
