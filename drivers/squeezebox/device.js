@@ -35,7 +35,13 @@ class SqueezeboxDevice extends Homey.Device {
     this.registerCapabilityListener('volume_mute', (v) => this.command(['mixer', 'muting', v ? 1 : 0]));
 
     this.image = await this.homey.images.createImage();
-    this.image.setUrl(null);
+    // Homey's setUrl only accepts https, and Lyrion is plain http on the LAN,
+    // so the album art is always streamed through the app.
+    this.artUrls = [];
+    this.image.setStream(async (stream) => {
+      const buf = await this.client.fetchImage(this.artUrls);
+      stream.end(buf);
+    });
     await this.setAlbumArtImage(this.image);
     this.lastCoverKey = null;
     this.lastTrackKey = null;
@@ -102,21 +108,10 @@ class SqueezeboxDevice extends Homey.Device {
 
       await this.updateAlarms(s);
 
-      const coverKey = `${track.id}|${track.coverid}|${meta.title}|${track.artwork_url}`;
+      const coverKey = `${track.id}|${track.coverid}|${meta.title}|${track.artwork_url || meta.artwork_url}`;
       if (coverKey !== this.lastCoverKey) {
         this.lastCoverKey = coverKey;
-        let art = track.artwork_url || meta.artwork_url;
-        if (art && !/^https?:/.test(art)) art = this.client.baseUrl + (art.startsWith('/') ? '' : '/') + art;
-        this.image.setUrl(art && art.startsWith('https') ? art : null);
-        if (!art || !art.startsWith('https')) {
-          // Homey requires https for setUrl; fall back to streaming the cover from the local server.
-          this.image.setStream(async (stream) => {
-            const res = await fetch(art || this.client.coverUrl(this.playerId));
-            if (!res.ok) throw new Error('No cover');
-            const buf = Buffer.from(await res.arrayBuffer());
-            stream.end(buf);
-          });
-        }
+        this.artUrls = this.client.artworkUrls(this.playerId, track.artwork_url || meta.artwork_url);
         await this.image.update();
       }
     } catch (err) {

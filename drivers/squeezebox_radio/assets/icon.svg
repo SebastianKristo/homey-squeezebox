@@ -1,1 +1,17 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 960"><rect x="180" y="260" width="600" height="440" rx="60" fill="none" stroke="#000" stroke-width="40"/><circle cx="360" cy="480" r="110" fill="none" stroke="#000" stroke-width="40"/><rect x="520" y="400" width="180" height="40" rx="20"/><rect x="520" y="480" width="180" height="40" rx="20"/><rect x="520" y="560" width="120" height="40" rx="20"/></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 960" fill="none" stroke="#000" stroke-width="32" stroke-linecap="round" stroke-linejoin="round">
+  <rect x="80" y="230" width="800" height="520" rx="90"/>
+  <path d="M440 230v520"/>
+  <g fill="#000" stroke="none">
+    <circle cx="170" cy="340" r="14"/><circle cx="230" cy="340" r="14"/><circle cx="290" cy="340" r="14"/><circle cx="350" cy="340" r="14"/>
+    <circle cx="200" cy="400" r="14"/><circle cx="260" cy="400" r="14"/><circle cx="320" cy="400" r="14"/>
+    <circle cx="170" cy="460" r="14"/><circle cx="230" cy="460" r="14"/><circle cx="290" cy="460" r="14"/><circle cx="350" cy="460" r="14"/>
+    <circle cx="200" cy="520" r="14"/><circle cx="260" cy="520" r="14"/><circle cx="320" cy="520" r="14"/>
+    <circle cx="170" cy="580" r="14"/><circle cx="230" cy="580" r="14"/><circle cx="290" cy="580" r="14"/><circle cx="350" cy="580" r="14"/>
+    <circle cx="200" cy="640" r="14"/><circle cx="260" cy="640" r="14"/><circle cx="320" cy="640" r="14"/>
+  </g>
+  <rect x="560" y="290" width="200" height="150" rx="14"/>
+  <path d="M505 310v20M505 365v20M505 420v20M815 310v20M815 365v20M815 420v20" stroke-width="28"/>
+  <circle cx="660" cy="590" r="95"/>
+  <circle cx="510" cy="680" r="34"/>
+  <circle cx="815" cy="680" r="24"/>
+</svg>
