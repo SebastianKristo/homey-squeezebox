@@ -4,6 +4,9 @@ const Homey = require('homey');
 const artwork = require('../../lib/artwork');
 
 const POLL_INTERVAL = 5000;
+const OFF_INTERVAL = 15000; // player switched off
+const IDLE_INTERVAL = 30000; // player or server unreachable
+const ALARM_PREF_EVERY = 12; // polls between reading the alarms-enabled setting
 
 class SqueezeboxDevice extends Homey.Device {
   async onInit() {
@@ -53,17 +56,29 @@ class SqueezeboxDevice extends Homey.Device {
     this.lastCoverKey = null;
     this.lastTrackKey = null;
 
-    this.poll();
-    this.pollTimer = this.homey.setInterval(() => this.poll(), POLL_INTERVAL);
+    this.pollCount = 0;
+    this.schedulePoll(0);
   }
 
   get client() {
     return this.homey.app.getClientFor(this.getStoreValue('serverId'));
   }
 
+  // One timer per device; the next poll is planned when the previous one is
+  // done, so slow servers never cause overlapping requests.
+  schedulePoll(delay) {
+    this.homey.clearTimeout(this.pollTimer);
+    const gen = (this.pollGen = (this.pollGen || 0) + 1);
+    this.pollTimer = this.homey.setTimeout(async () => {
+      const next = await this.poll();
+      // A command may have planned a new poll while this one was running.
+      if (!this.deleted && gen === this.pollGen) this.schedulePoll(next);
+    }, delay);
+  }
+
   async command(cmd) {
     await this.client.request(this.playerId, cmd);
-    this.homey.setTimeout(() => this.poll(), 500);
+    this.schedulePoll(500);
   }
 
   async playPreset(n) {
@@ -71,6 +86,7 @@ class SqueezeboxDevice extends Homey.Device {
   }
 
   async setAlarmsEnabled(enabled) {
+    this.pollCount = 0; // read the setting back on the next poll
     await this.command(['playerpref', 'alarmsEnabled', enabled ? 1 : 0]);
   }
 
@@ -86,11 +102,11 @@ class SqueezeboxDevice extends Homey.Device {
         // The server doesn't know this player any more; it may have moved to another server.
         await this.moveToServerWithPlayer();
         await this.setUnavailable(this.homey.__('error.disconnected'));
-        return;
+        return IDLE_INTERVAL;
       }
       if (s.player_connected === 0) {
         await this.setUnavailable(this.homey.__('error.disconnected'));
-        return;
+        return IDLE_INTERVAL;
       }
       if (!this.getAvailable()) await this.setAvailable();
 
@@ -146,11 +162,13 @@ class SqueezeboxDevice extends Homey.Device {
         this.artUrls = urls;
         await this.image.update();
       }
+      return s.power === 1 ? POLL_INTERVAL : OFF_INTERVAL;
     } catch (err) {
       this.error('Poll failed:', err.message);
       await this.setUnavailable(err.message).catch(() => {});
       // After a few failures, check whether the server got a new IP address.
       if (++this.failures === 3) this.homey.app.rediscover().catch(this.error);
+      return IDLE_INTERVAL;
     }
   }
 
@@ -166,8 +184,11 @@ class SqueezeboxDevice extends Homey.Device {
   }
 
   async updateAlarms(s) {
-    const pref = await this.client.request(this.playerId, ['playerpref', 'alarmsEnabled', '?']);
-    await this.set('sb_alarms_enabled', String(pref._p2) === '1');
+    // The setting rarely changes, so it's read about once a minute.
+    if (this.pollCount++ % ALARM_PREF_EVERY === 0) {
+      const pref = await this.client.request(this.playerId, ['playerpref', 'alarmsEnabled', '?']);
+      await this.set('sb_alarms_enabled', String(pref._p2) === '1');
+    }
 
     // alarm_state is one of: none, set, active, snooze
     const state = s.alarm_state || 'none';
@@ -197,11 +218,13 @@ class SqueezeboxDevice extends Homey.Device {
   }
 
   async onDeleted() {
-    this.homey.clearInterval(this.pollTimer);
+    this.deleted = true;
+    this.homey.clearTimeout(this.pollTimer);
   }
 
   async onUninit() {
-    this.homey.clearInterval(this.pollTimer);
+    this.deleted = true;
+    this.homey.clearTimeout(this.pollTimer);
   }
 }
 

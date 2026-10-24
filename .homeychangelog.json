@@ -1,4 +1,7 @@
 {
+  "1.0.5": {
+    "en": "new fix"
+  },
   "1.0.4": {
     "en": "Album art for internet radio: the cover is looked up from the artist and title the station sends. Artist and title are now shown separately for radio.",
     "no": "Albumcover for nettradio: coveret slås opp ut fra artist og tittel som kanalen sender. Artist og tittel vises nå hver for seg for radio."
@@ -18,8 +21,5 @@
   "1.0.0": {
     "en": "First release.",
     "no": "Første versjon."
-  },
-  "1.0.5": {
-    "en": "new fix"
   }
 }
