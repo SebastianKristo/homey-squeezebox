@@ -1,6 +1,11 @@
 {
+  "1.0.6": {
+    "en": "Uses less memory and fewer requests: lighter network code, slower polling while a player is off or unreachable.",
+    "no": "Bruker mindre minne og færre forespørsler: lettere nettverkskode og sjeldnere oppdatering når en spiller er av eller utilgjengelig."
+  },
   "1.0.5": {
-    "en": "new fix"
+    "en": "Album art for internet radio.",
+    "no": "Albumcover for nettradio."
   },
   "1.0.4": {
     "en": "Album art for internet radio: the cover is looked up from the artist and title the station sends. Artist and title are now shown separately for radio.",
