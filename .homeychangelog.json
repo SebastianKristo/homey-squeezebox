@@ -26,5 +26,8 @@
   "1.0.0": {
     "en": "First release.",
     "no": "Første versjon."
+  },
+  "1.1.0": {
+    "en": "new fix"
   }
 }
